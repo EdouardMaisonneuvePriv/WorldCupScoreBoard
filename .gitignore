@@ -1,0 +1,4 @@
+# Ignore bin directory's content
+bin/*
+# but keeps it
+!bin/
