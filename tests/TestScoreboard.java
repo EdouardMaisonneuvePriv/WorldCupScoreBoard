@@ -164,7 +164,7 @@ class TestScoreboard {
             IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
 				board.updateScore(matchId,-2,-2);;
 	        });
-	        assertEquals("Error: trying to provide a negative score", exception.getMessage());
+	        assertEquals("Trying to provide a negative score", exception.getMessage());
         }
     }
 
