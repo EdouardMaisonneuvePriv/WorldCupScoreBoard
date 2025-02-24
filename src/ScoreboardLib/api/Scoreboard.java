@@ -48,6 +48,11 @@ public class Scoreboard {
 
             if (null != scoreHomeTeam && null != scoreVisitorTeam) {
 
+                if(this.listMatches.containsKey(matchId)) {
+
+                } else {
+                    throw new IllegalArgumentException("Trying to update an invalid match");
+                }
             } else {
                 throw new IllegalArgumentException("Trying to update a match will null scores");
             }

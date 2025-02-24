@@ -152,7 +152,7 @@ class TestScoreboard {
             IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
 				board.updateScore(45,2,2);
 	        });
-	        assertEquals("Error: trying to update an invalid match", exception.getMessage());
+	        assertEquals("Trying to update an invalid match", exception.getMessage());
         }
 
         @Test
