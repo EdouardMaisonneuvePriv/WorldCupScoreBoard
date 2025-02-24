@@ -1,9 +1,9 @@
 # WorldCupScoreBoard
 Amazing (and fancy) score board library for the World Cup 2026
 
-##Requirements analysis:
+## Requirements analysis:
 
-###Requirement 1. Start a new match, assuming initial score 0 – 0 and adding it the scoreboard. This should capture following parameters:a. Home team b. Away team
+### Requirement 1. Start a new match, assuming initial score 0 – 0 and adding it the scoreboard. This should capture following parameters:a. Home team b. Away team
 
 **Written assumptions**
 + The Scoreboard is a representation of a Match between 2 Teams. The Scoreboard allows the vizualisation of the scores of several ongoing matches.
@@ -20,7 +20,7 @@ matches at the same time. The reponsibility of the data consistency lies on the 
 + Updating the score requires a way to identify each match individually (see below). As a consequence, adding a function returns an unique match identifier. It is the responsibility of the users to store the identifier of each match they created, so they can update the score later.
 + The scoreboard can contain at most 2147483647 simultaneously (the match unique ID is a 32 positive int). Of course, this number of matches is also limited by the machine's memory. If the machine doesn't have enough resources, a java.lang.OutOfMemoryError will be thrown.
 
-###Requirement 2. Update score. This should receive a pair of absolute scores: home team score and away team score.
+### Requirement 2. Update score. This should receive a pair of absolute scores: home team score and away team score.
 
 **Written assumptions**
 + a score update consists in a pair of absolute scores (home team score and away).
@@ -34,7 +34,7 @@ matches at the same time. The reponsibility of the data consistency lies on the 
 + the maximal value of the score will be 2147483647 (32 bits).
 + Similarly to the creation, as we assume that the library will be used in a multi-threaded environment, the score update should be done in within a mutex/semaphore critical section.
 
-###Requirement 3. Finish match currently in progress. This removes a match from the scoreboard.
+### Requirement 3. Finish match currently in progress. This removes a match from the scoreboard.
 
 **Written assumptions**
 + Finishing a match removes it from the Scoreboard.
@@ -44,7 +44,7 @@ matches at the same time. The reponsibility of the data consistency lies on the 
 + Trying to update the score of a not-ongoing match (with the ID of a finished match, or invalid match ID) will result in an exception being thrown.
 + Similarly to the creation & scores updates, as we assume that the library will be used in a multi-threaded environment, the match termination should be done in within a mutex/semaphore critical section.
 
-###Requirement 4. Get a summary of matches in progress ordered by their total score. The matches with the same total score will be returned ordered by the most recently started match in the scoreboard.
+### Requirement 4. Get a summary of matches in progress ordered by their total score. The matches with the same total score will be returned ordered by the most recently started match in the scoreboard.
 
 **Written assumptions**
 + the matches should be sorted by descending cumulated scores, and for matches having the same cumulated score, the match created first will be placed lower
@@ -55,4 +55,4 @@ matches at the same time. The reponsibility of the data consistency lies on the 
 + The summary will be returned as a string.
 + If there's no ongoing match on the scoreboard, the returned string will be empty.
 
-##Project documentation:
+## Project documentation:
