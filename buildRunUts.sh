@@ -11,7 +11,7 @@ mkdir -p "$OUT_DIR"
 
 # Compile the main source code
 echo "Compiling main source code..."
-javac -d "$OUT_DIR" "$SRC_DIR/ScoreboardLib/api/Scoreboard.java" "$SRC_DIR/ScoreboardLib/internal/Match.java" "$SRC_DIR/ScoreboardLib/internal/Team.java" || { echo "Main source code compilation failed!"; exit 1; }
+javac -d "$OUT_DIR" "$SRC_DIR/ScoreboardLib/api/Scoreboard.java" "$SRC_DIR/ScoreboardLib/internal/Match.java" || { echo "Main source code compilation failed!"; exit 1; }
 
 # Compile the unit tests (ensure ScoreboardLib is in classpath)
 echo "Compiling unit tests..."
