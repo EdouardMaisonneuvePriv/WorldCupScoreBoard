@@ -121,11 +121,35 @@ class TestScoreboard {
         }
 
         @Test
+        void NullMatchId_ExceptionThrown() {
+            Scoreboard board = new Scoreboard();
+
+            Integer matchId = board.startMatch("France", "Mexico");
+
+            IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+				board.updateScore(null, 1, 2);
+	        });
+	        assertEquals("Error: trying to update an invalid match", exception.getMessage());
+        }
+
+        @Test
+        void NullScores_ExceptionThrown() {
+            Scoreboard board = new Scoreboard();
+
+            Integer matchId = board.startMatch("France", "Mexico");
+
+            IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+				board.updateScore(matchId, null, null);
+	        });
+	        assertEquals("Error: trying to update an invalid match", exception.getMessage());
+        }
+
+        @Test
         void InvalidMatchId_ExceptionThrown() {
             Scoreboard board = new Scoreboard();
 
             IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-				board.updateScore(45,2,2);;
+				board.updateScore(45,2,2);
 	        });
 	        assertEquals("Error: trying to update an invalid match", exception.getMessage());
         }
@@ -138,6 +162,42 @@ class TestScoreboard {
 
             IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
 				board.updateScore(matchId,-2,-2);;
+	        });
+	        assertEquals("Error: trying to provide a negative score", exception.getMessage());
+        }
+    }
+
+    @Nested
+    class TerminateMatchTests {
+
+        @Test
+        void TerminateMatch_MatchTerminated() {
+
+        }
+
+                
+        @Test
+        void TryToTerminateMatchAlreadyTerminated_ExceptionThrown() {
+
+            Scoreboard board = new Scoreboard();
+            Integer matchId = board.startMatch("France", "Portugal");
+
+            // Should pass
+            board.terminateMatch(matchId);
+
+            IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+				board.terminateMatch(matchId);
+	        });
+	        assertEquals("Error: trying to provide a negative score", exception.getMessage());
+        }
+
+
+        void TryToTerminateInvalidMatch_ExceptionThrown() {
+
+            Scoreboard board = new Scoreboard();
+
+            IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+				board.terminateMatch(10);
 	        });
 	        assertEquals("Error: trying to provide a negative score", exception.getMessage());
         }
