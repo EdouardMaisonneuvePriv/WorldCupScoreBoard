@@ -263,29 +263,30 @@ class TestScoreboard {
 
         @Test
         void SameScores_MatchesSortedPerCreationDate() {
-            String name1 = "England";
-            String name2 = "Spain";
-            String name3 = "France";
-            String name4 = "Argentina";
+            String england = "England";
+            String spain = "Spain";
+            String france = "France";
+            String argentina = "Argentina";
 
-            Integer scoreFrance = 1;
-            Integer scoreArgentina = 2;
             Integer scoreEngland = 1;
             Integer scoreSpain = 2;
+            Integer scoreFrance = 1;
+            Integer scoreArgentina = 2;
 
             Integer EngEspMatchId;
             Integer FraArgMatchId;
 
             String matchesSummary;
             
-            String expectedResult = name1 + " " + scoreEngland.toString() + " - " +
-                    name2 + " " + scoreSpain.toString() + "\n" + 
-                    name3 + " " + scoreFrance.toString() + " - " + 
-                    name4 + " " + scoreArgentina.toString();
+            String expectedResult = france + " " + scoreFrance.toString() + " - " +
+                    argentina + " " + scoreArgentina.toString() + "\n" + 
+                    england + " " + scoreEngland.toString() + " - " +
+                    spain + " " + scoreSpain.toString();
+                    
 
             Scoreboard board = new Scoreboard();
-            EngEspMatchId = board.startMatch(name1, name2);
-            FraArgMatchId = board.startMatch(name3, name4);
+            EngEspMatchId = board.startMatch(england, spain);
+            FraArgMatchId = board.startMatch(france, argentina);
 
             board.updateScore(EngEspMatchId, scoreEngland, scoreSpain);
             board.updateScore(FraArgMatchId, scoreFrance, scoreArgentina);
@@ -317,12 +318,15 @@ class TestScoreboard {
 
             String matchesSummary;
             
+            // First Germany vs Brazil (goal number) then France vs Argentina (started last)
+            // then England vs Spain (same number of goals than Fra:Arg, but started before)
             String expectedResult = germany + " " + scoreGermany.toString() + " - " +
                     brazil + " " + scoreBrazil.toString() + "\n" + 
-                    england + " " + scoreEngland.toString() + " - " +
-                    spain + " " + scoreSpain.toString() + "\n" + 
                     france + " " + scoreFrance.toString() + " - " + 
-                    argentina + " " + scoreArgentina.toString();
+                    argentina + " " + scoreArgentina.toString() + "\n" + 
+                    england + " " + scoreEngland.toString() + " - " +
+                    spain + " " + scoreSpain.toString();
+                    
 
             Scoreboard board = new Scoreboard();
             EngEspMatchId = board.startMatch(england, spain);
@@ -334,6 +338,11 @@ class TestScoreboard {
             board.updateScore(GerBraMatchId, scoreGermany, scoreBrazil);
 
             matchesSummary = board.getMatchesSummary();
+
+            System.out.println("expected");
+            System.out.println(expectedResult + "\n");
+            System.out.println("real");
+            System.out.println(matchesSummary);
 
             assertTrue(0 == matchesSummary.compareTo(expectedResult), "Incorrect matches summary");
         }

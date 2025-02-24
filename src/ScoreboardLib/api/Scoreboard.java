@@ -2,7 +2,9 @@ package ScoreboardLib.api;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.List;
+import java.util.*; 
+import java.util.stream.Collectors;
 import ScoreboardLib.internal.Match;
 
 public class Scoreboard {
@@ -86,7 +88,10 @@ public class Scoreboard {
     }
 
     public String getMatchesSummary() {
-        return "";
+
+        List<Match> matches = new ArrayList<Match>(this.listMatches.values());
+        Collections.sort(matches);
+        return matches.stream().map(Match::toString).collect(Collectors.joining("\n"));
     }
 
 }

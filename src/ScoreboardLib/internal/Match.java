@@ -46,14 +46,22 @@ public class Match implements Comparable<Match> {
     public int compareTo(Match arg0) {
 
         int result = 0;
-        Integer ownNumberGoals = this.getTotalNumberGoals();
-        Integer otherMatchNumberGoals = arg0.getTotalNumberGoals();
+
+        System.out.println("Comparing: " + this + " vs " + arg0);
+
+        // Sort by total goals (descending)
+        int goalComparison = Integer.compare(arg0.getTotalNumberGoals(), this.getTotalNumberGoals());
         
-        if (ownNumberGoals != otherMatchNumberGoals) {
-            result = ownNumberGoals - otherMatchNumberGoals;
-        } else {
-            result = this.matchId - arg0.matchId;
+        if (goalComparison != 0) {
+            System.out.println("using goals to compare");
+            return goalComparison; // Sort by highest goals first
         }
+
+        // Sort by match ID (descending) to prioritize the most recently started match
+        System.out.println("using matchId to compare");
+        result = Integer.compare(arg0.matchId, this.matchId);
+        System.out.println(result + " -> " + this + " is smaller than " + arg0);
         return result;
     }
+
 }
