@@ -1,3 +1,0 @@
-module WorldCupScoreBoard {
-    exports api;
-}
