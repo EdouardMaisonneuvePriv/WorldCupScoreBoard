@@ -4,5 +4,8 @@
 SRC_DIR="$PWD/src"
 BIN_DIR="$PWD/bin"
 
-# Compile the Java source files using absolute paths
-javac -d "$BIN_DIR" "$SRC_DIR/module-info.java" "$SRC_DIR/api/"*.java "$SRC_DIR/internal"/*.java
+# Create the bin directory if it doesn't exist
+mkdir -p "$BIN_DIR"
+
+# Compile the Java source files using modules
+javac --module-source-path "$SRC_DIR" -d "$BIN_DIR" $(find "$SRC_DIR/ScoreboardLib" -name "*.java")
