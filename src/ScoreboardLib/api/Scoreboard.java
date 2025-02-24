@@ -14,10 +14,46 @@ public class Scoreboard {
     }
 
     public Integer startMatch(String nameHomeTeam, String nameVisitorTeam) {
-        return 0;
+
+        Integer createdMatchId = 0;
+
+        if (null != nameHomeTeam && null != nameVisitorTeam) {
+
+            String trimmedNameHome = nameHomeTeam.trim();
+            String trimmedNameVisitor = nameVisitorTeam.trim();
+
+            if (!trimmedNameHome.isEmpty() && !trimmedNameVisitor.isEmpty()) {
+
+                if (trimmedNameHome != trimmedNameVisitor) {
+                    Match newMatch = new Match(trimmedNameHome, trimmedNameVisitor);
+                    Integer idNewMatch = newMatch.getMatchUniqueId();
+                    this.listMatches.put(idNewMatch,newMatch);
+                    createdMatchId = idNewMatch;
+                } else {
+                    throw new IllegalArgumentException("Invalid team names (the same for both teams)");
+                }
+            } else {
+                throw new IllegalArgumentException("Team names must be non empty");
+            }
+        } else {
+            throw new IllegalArgumentException("Team names must be non null");
+        }
+
+        return createdMatchId;
     }
 
     public void updateScore(Integer matchId, Integer scoreHomeTeam, Integer scoreVisitorTeam) {
+
+        if(null != matchId) {
+
+            if (null != scoreHomeTeam && null != scoreVisitorTeam) {
+
+            } else {
+                throw new IllegalArgumentException("Trying to update a match will null scores");
+            }
+        } else {
+            throw new IllegalArgumentException("Trying to update a match with null ID");
+        }
 
     }
 

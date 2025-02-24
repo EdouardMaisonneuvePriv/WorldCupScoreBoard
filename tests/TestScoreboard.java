@@ -51,7 +51,7 @@ class TestScoreboard {
         }    
     }
 
-    /**
+    /*
     *
     * Test to check if a newly created board is properly initialized
     */
@@ -78,6 +78,7 @@ class TestScoreboard {
             assertTrue(1 == listMatches.size(),"Match1 was not successfully added");
 
             match2Id = board.startMatch(nameTeam3, nameTeam4);
+
             assertTrue(2 == listMatches.size(),"Match2 was not successfully added");
             assertTrue(match1Id != match2Id,"Match1 and Match2 have the same unique Id");
         }
@@ -89,7 +90,7 @@ class TestScoreboard {
             IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
 				board.startMatch(null,null);
 	        });
-	        assertEquals("At least 1 null team name passed", exception.getMessage());
+	        assertEquals("Team names must be non null", exception.getMessage());
         }
 
         @Test
@@ -98,7 +99,7 @@ class TestScoreboard {
             IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
 				board.startMatch("","     ");
 	        });
-	        assertEquals("At least 1 empty team name passed", exception.getMessage());
+	        assertEquals("Team names must be non empty", exception.getMessage());
         }
 
         @Test
@@ -129,7 +130,7 @@ class TestScoreboard {
             IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
 				board.updateScore(null, 1, 2);
 	        });
-	        assertEquals("Error: trying to update an invalid match", exception.getMessage());
+	        assertEquals("Trying to update a match with null ID", exception.getMessage());
         }
 
         @Test
@@ -141,7 +142,7 @@ class TestScoreboard {
             IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
 				board.updateScore(matchId, null, null);
 	        });
-	        assertEquals("Error: trying to update an invalid match", exception.getMessage());
+	        assertEquals("Trying to update a match will null scores", exception.getMessage());
         }
 
         @Test
