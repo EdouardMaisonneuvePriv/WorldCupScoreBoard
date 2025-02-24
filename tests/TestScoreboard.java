@@ -57,9 +57,11 @@ class TestScoreboard {
             Scoreboard board = new Scoreboard();
             Map<Integer, Match> retrievedMatches;
             
+            // Making sure that the object is created
             assertNotNull(board, "The Scoreboard object should not be null");
             retrievedMatches = TestScoreboard.helperGetListMatchesForBoard(board);
 
+            // Making sure that it doesn't contain any match
             assertTrue(retrievedMatches.keySet().isEmpty(),
                 "The newly created Scoreboard contains some entries while it should not");
         }
@@ -89,12 +91,18 @@ class TestScoreboard {
 
             match1Id = board.startMatch(nameTeam1, nameTeam2);
             listMatches = TestScoreboard.helperGetListMatchesForBoard(board);
+            // Making sure that the match has been added to the Scoreboard
             assertTrue(1 == listMatches.size(), "Match1 was not successfully added");
 
             match2Id = board.startMatch(nameTeam3, nameTeam4);
 
+            // Making sure that the second match has been added to the Scoreboard
             assertTrue(2 == listMatches.size(), "Match2 was not successfully added");
+            // Making sure that the 2 matches have different unique MatchId
             assertTrue(match1Id != match2Id, "Match1 and Match2 have the same unique Id");
+            // We do not check that the data of the matches have not been modified during
+            // the process, as it would require to violate severely the encapsulation
+            // of the Match class.
         }
 
         /**
@@ -217,6 +225,18 @@ class TestScoreboard {
          */
         @Test
         void TerminateMatch_MatchTerminated() {
+
+            Scoreboard board = new Scoreboard();
+            Integer matchId = board.startMatch("Croatia","Nigeria");
+            Map<Integer, Match> retrievedMatches;
+
+            board.terminateMatch(matchId);
+
+            retrievedMatches = TestScoreboard.helperGetListMatchesForBoard(board);
+
+            // Making sure that it doesn't contain any match
+            assertTrue(retrievedMatches.keySet().isEmpty(),
+                "The Scoreboard contains some entries while it should not");
         }
 
         /**

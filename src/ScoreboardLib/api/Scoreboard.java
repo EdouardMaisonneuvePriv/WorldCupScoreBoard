@@ -42,6 +42,8 @@ public class Scoreboard {
             throw new IllegalArgumentException("Team names must be non-null");
         }
         
+        // Removing all the spaces at the beginning and end of the 
+        // names of the 2 teams.
         String trimmedNameHome = nameHomeTeam.trim();
         String trimmedNameVisitor = nameVisitorTeam.trim();
         
@@ -56,6 +58,8 @@ public class Scoreboard {
         Match newMatch = new Match(trimmedNameHome, trimmedNameVisitor);
         Integer idNewMatch = newMatch.getMatchUniqueId();
         
+        // We edit the list of the matches within a critical section
+        // to avoid any race conditions.
         this.mutex.acquireUninterruptibly();
         this.listMatches.put(idNewMatch, newMatch);
         this.mutex.release();
@@ -85,6 +89,9 @@ public class Scoreboard {
             throw new IllegalArgumentException("Trying to provide a negative score");
         }
         
+        // As we can potentially be in a multi-threaded environment,
+        // the list of the matches (and all the matches it contains)
+        // are updated within a semaphore-protected critical section
         this.mutex.acquireUninterruptibly();
         Match match = this.listMatches.get(matchId);
         match.setHomeScore(scoreHomeTeam);
@@ -106,6 +113,9 @@ public class Scoreboard {
             throw new IllegalArgumentException("Trying to terminate a match with invalid ID");
         }
         
+        // As we can potentially be in a multi-threaded environment,
+        // the list of the matches (and all the matches it contains)
+        // are updated within a semaphore-protected critical section
         this.mutex.acquireUninterruptibly();
         this.listMatches.remove(matchId);
         this.mutex.release();
@@ -118,10 +128,15 @@ public class Scoreboard {
      * @return a formatted string containing match summaries, separated by new lines
      */
     public String getMatchesSummary() {
+        // Taking a snapshot of the list of the matches and their results
         this.mutex.acquireUninterruptibly();
         List<Match> matches = new ArrayList<>(this.listMatches.values());
-        Collections.sort(matches);
         this.mutex.release();
+
+        // the sorting relies on the Match.compareTo method, which compares Matches
+        // per total number of scored goals, and then by starting order, if they have
+        // the same number of goals.
+        Collections.sort(matches);
         return matches.stream().map(Match::toString).collect(Collectors.joining("\n"));
     }
 }
