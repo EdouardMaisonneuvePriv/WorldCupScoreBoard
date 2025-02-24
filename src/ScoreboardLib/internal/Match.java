@@ -20,6 +20,14 @@ public class Match implements Comparable<Match> {
         Match.matchCounter++;
     }
 
+    public void setHomeScore(Integer homeScore) {
+        this.scoreHomeTeam = homeScore;
+    }
+
+    public void setVisitorScore(Integer visitorScore) {
+        this.scoreVisitorTeam = visitorScore;
+    }
+
     public Integer getMatchUniqueId() {
         return this.matchId;
     }

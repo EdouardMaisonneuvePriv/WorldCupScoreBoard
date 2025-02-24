@@ -52,6 +52,9 @@ public class Scoreboard {
 
                     if (0 <= scoreHomeTeam && 0 <= scoreVisitorTeam) {
 
+                        Match match = this.listMatches.get(matchId);
+                        match.setHomeScore(scoreHomeTeam);
+                        match.setVisitorScore(scoreVisitorTeam);
                     } else {
                         throw new IllegalArgumentException("Trying to provide a negative score");
                     }
@@ -68,6 +71,17 @@ public class Scoreboard {
     }
 
     public void terminateMatch(Integer matchId) {
+
+        if (null != matchId) {
+
+            if (this.listMatches.containsKey(matchId)) {
+                this.listMatches.remove(matchId);
+            } else {
+                throw new IllegalArgumentException("Trying to terminate a match with invalid ID");
+            }
+        } else {
+            throw new IllegalArgumentException("Trying to terminate a match with null ID");
+        }
 
     }
 
