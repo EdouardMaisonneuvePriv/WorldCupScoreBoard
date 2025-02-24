@@ -56,3 +56,8 @@ matches at the same time. The reponsibility of the data consistency lies on the 
 + If there's no ongoing match on the scoreboard, the returned string will be empty.
 
 ## Project documentation:
+
+### Requirements
+
+- OpenJDK 23 or newer
+- JUnit 5 (JUnit Platform Console Standalone JAR for running unit tests)

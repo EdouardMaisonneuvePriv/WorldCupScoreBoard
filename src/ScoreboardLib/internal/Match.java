@@ -37,6 +37,10 @@ public class Match implements Comparable<Match> {
      * @param visitorTeamName the name of the visiting team
      */
     public Match(String homeTeamName, String visitorTeamName) {
+
+        // We use and update the Match counter within a semaphore
+        // protected critical section, to avoid undefined
+        // behaviours in a multi-threaded environment
         this.mutex.acquireUninterruptibly();
         this.matchId = Match.matchCounter;
         Match.matchCounter++;
@@ -107,10 +111,16 @@ public class Match implements Comparable<Match> {
      */
     @Override
     public int compareTo(Match otherMatch) {
+
+        // As we want to sort the matches per descending number of goals, we swap
+        // this and otherMatch in the Integer comparison
         int goalComparison = Integer.compare(otherMatch.getTotalNumberGoals(), this.getTotalNumberGoals());
         if (goalComparison != 0) {
             return goalComparison;
         }
+
+        // Similarly as above, as we want to sort the matches having the same number of scored goals
+        // having the most recent first, we swap other.matchId and this.matchId.
         return Integer.compare(otherMatch.matchId, this.matchId);
     }
 }
